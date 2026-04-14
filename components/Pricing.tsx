@@ -82,6 +82,7 @@ const plans = [
     priceMonthly: "89,90",
     priceAnnual: "79,90",
     extraProfPrice: 15,
+    contactPrice: true,
     cta: "Solicitar demo",
     featured: false,
     badge: "Mejor valorado",
