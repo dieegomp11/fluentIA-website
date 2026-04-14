@@ -89,13 +89,13 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile: logo left + toggle */}
-      <div className="lg:hidden flex items-center justify-between max-w-7xl mx-auto px-6 h-28">
-        <a href="#inicio" className="flex items-center shrink-0">
+      {/* Mobile: logo centrado + toggle derecha */}
+      <div className="lg:hidden relative flex items-center justify-center max-w-7xl mx-auto px-6 h-28">
+        <a href="#inicio" className="flex items-center">
           <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`} alt="fluentIA" width={140} height={40} priority />
         </a>
         <button
-          className="p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
+          className="absolute right-6 p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -103,38 +103,56 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — pantalla completa, desliza desde la derecha */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden bg-white border-t border-[#e8edf5] overflow-hidden"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col"
           >
-            <div className="px-6 py-4 flex flex-col gap-1">
+            {/* Cabecera del menú fullscreen */}
+            <div className="flex items-center justify-between px-6 h-28 border-b border-[#e8edf5] shrink-0">
+              <a href="#inicio" onClick={() => setOpen(false)} className="flex items-center">
+                <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`} alt="fluentIA" width={140} height={40} priority={false} />
+              </a>
+              <button
+                className="p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <nav className="px-6 py-6 flex flex-col flex-1 overflow-y-auto">
               {links.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  initial={{ opacity: 0, x: -16 }}
+                  initial={{ opacity: 0, x: 28 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => setOpen(false)}
-                  className="py-3 text-sm font-medium text-[#334155] border-b border-[#f1f5f9] last:border-0 hover:text-[#d4145a] transition-colors"
+                  className="py-5 text-xl font-semibold text-[#0f172a] border-b border-[#f1f5f9] last:border-0 hover:text-[#d4145a] transition-colors"
                 >
                   {link.label}
                 </motion.a>
               ))}
-              <a
+              <motion.a
                 href="#contacto"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08 + links.length * 0.06 + 0.05 }}
                 onClick={() => setOpen(false)}
-                className="mt-3 px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold text-center"
+                className="mt-8 px-5 py-3.5 rounded-full bg-[#d4145a] text-white text-base font-semibold text-center shadow-lg shadow-[#d4145a]/20"
               >
                 Solicitar demo
-              </a>
-            </div>
+              </motion.a>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
