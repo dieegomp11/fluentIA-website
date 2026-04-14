@@ -53,9 +53,16 @@ const securityHeaders = [
   },
 ];
 
+// En GitHub Actions el repo se llama fluentIA-website → basePath necesario
+const isPagesDeployment = process.env.GITHUB_ACTIONS === "true";
+const basePath = isPagesDeployment ? "/fluentIA-website" : "";
+
 const nextConfig: NextConfig = {
   // Exportación estática para GitHub Pages
   output: "export",
+
+  // Ruta base del repo en GitHub Pages (vacía en local/Vercel)
+  basePath,
 
   // Necesario para que Next.js Image funcione sin servidor
   images: {
