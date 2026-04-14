@@ -173,7 +173,7 @@ export default function Hero() {
     <section
       id="inicio"
       ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center pt-20 sm:pt-24 overflow-hidden bg-white"
+      className="relative min-h-[100dvh] flex items-center pt-14 sm:pt-24 overflow-hidden bg-white"
       onMouseMove={(e) => {
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
