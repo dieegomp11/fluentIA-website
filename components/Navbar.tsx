@@ -101,10 +101,10 @@ export default function Navbar() {
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
             alt="fluentIA"
-            width={140}
-            height={40}
+            width={180}
+            height={54}
             priority
-            className="h-12 sm:h-14 w-auto"
+            className="h-16 sm:h-20 w-auto"
           />
         </a>
         <button
@@ -132,9 +132,9 @@ export default function Navbar() {
                 <Image
                   src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
                   alt="fluentIA"
-                  width={140}
-                  height={40}
-                  className="h-12 sm:h-14 w-auto"
+                  width={180}
+                  height={54}
+                  className="h-16 sm:h-20 w-auto"
                 />
               </a>
               <button
