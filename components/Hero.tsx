@@ -11,49 +11,9 @@ import {
   Warning,
 } from "@phosphor-icons/react";
 import { useRef, useState, useEffect } from "react";
+import { useT } from "@/lib/i18n";
 
-// — Chat sequences: 3 preguntas + 3 respuestas por conversación
-const sequences = [
-  [
-    { type: "user", text: "Hola, ¿me podéis explicar qué incluye el plan de agenda?" },
-    { type: "bot",  text: "¡Claro! Incluye gestión automática de citas, recordatorios y atención 24/7." },
-    { type: "user", text: "¿Y puedo hablar con alguien del equipo?" },
-    { type: "bot",  text: "Por supuesto. ¿Te agendo una llamada para hoy o mañana?" },
-    { type: "user", text: "Mañana a las 11 h me va bien." },
-    { type: "bot",  text: "✓ Llamada confirmada para mañana a las 11:00 h. ¡Hasta entonces!" },
-  ],
-  [
-    { type: "user", text: "¿Cuánto cuesta el contestador de reseñas?" },
-    { type: "bot",  text: "Desde 9,90 €/mes en plan anual o 12,90 €/mes sin permanencia." },
-    { type: "user", text: "¿Funciona con Google Maps?" },
-    { type: "bot",  text: "Sí, se integra directamente con Google y tus reseñas en Maps." },
-    { type: "user", text: "¿Hay disponibilidad para empezar esta semana?" },
-    { type: "bot",  text: "✓ Sí, podemos tenerte operativo en menos de 24 horas." },
-  ],
-  [
-    { type: "user", text: "Soy cliente, quiero reportar una incidencia." },
-    { type: "bot",  text: "Entendido. ¿Me indicas tu empresa y describes brevemente el problema?" },
-    { type: "user", text: "Somos Clínica Sur, la agenda no sincroniza desde ayer." },
-    { type: "bot",  text: "✓ Incidencia registrada. El equipo técnico te contactará en menos de 2 h." },
-    { type: "user", text: "Gracias, ¿puedo seguir el estado del ticket?" },
-    { type: "bot",  text: "Sí, te envío ahora mismo el enlace de seguimiento por este chat." },
-  ],
-  [
-    { type: "user", text: "Quiero contratar el plan de facturación automática." },
-    { type: "bot",  text: "¡Perfecto! Desde 19,90 €/mes. Te activo el alta ahora mismo." },
-    { type: "user", text: "¿Hay algo más que me recomiendas para mi negocio?" },
-    { type: "bot",  text: "Sí, muchos clientes combinan facturación con el contestador de reseñas IA." },
-    { type: "user", text: "Interesante, ¿qué precio tiene?" },
-    { type: "bot",  text: "✓ Desde 9,90 €/mes. Te incluyo los dos en el alta si quieres." },
-  ],
-];
-
-const chips = [
-  { Icon: WhatsappLogo, label: "Bot IA por WhatsApp" },
-  { Icon: Phone,        label: "Agenda una llamada" },
-  { Icon: Question,     label: "Precios y disponibilidad" },
-  { Icon: Warning,      label: "Incidencias y gestiones" },
-];
+const chipIcons = [WhatsappLogo, Phone, Question, Warning];
 
 // Delay between messages in a sequence (ms)
 const MSG_DELAY_MS = 900;
@@ -75,10 +35,13 @@ function TypingDots() {
   );
 }
 
-// Tiempo que tarda el grupo saliente en hacer fade-out (debe coincidir con exit duration)
 const EXIT_MS = 350;
 
 function AIChatMockup() {
+  const { t } = useT();
+  const h = t.hero;
+  const sequences = h.sequences as unknown as { type: string; text: string }[][];
+
   const [seqIdx, setSeqIdx] = useState(0);
   const [shownCount, setShownCount] = useState(0);
 
@@ -87,7 +50,6 @@ function AIChatMockup() {
     const msgs = sequences[seqIdx];
     const timers: ReturnType<typeof setTimeout>[] = [];
 
-    // Los mensajes empiezan a aparecer después del fade-out del grupo anterior
     msgs.forEach((_, i) => {
       timers.push(
         setTimeout(() => setShownCount(i + 1), EXIT_MS + (i + 1) * MSG_DELAY_MS)
@@ -100,7 +62,8 @@ function AIChatMockup() {
     );
 
     return () => timers.forEach(clearTimeout);
-  }, [seqIdx]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seqIdx, sequences.length]);
 
   const msgs = sequences[seqIdx];
   const showTyping =
@@ -121,19 +84,16 @@ function AIChatMockup() {
             <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo3.png`} alt="fluentIA" width={110} height={28} className="h-7 w-auto" />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-light text-[#64748b] tracking-widest text-[11px]">assistant</span>
+            <span className="font-light text-[#64748b] tracking-widest text-[11px]">{h.chatLabel}</span>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="text-[10px] text-[#94a3b8] font-medium tracking-wide">En línea · IA activa</span>
+              <span className="text-[10px] text-[#94a3b8] font-medium tracking-wide">{h.chatOnline}</span>
             </div>
           </div>
         </div>
 
-        {/* Chat area — flex-1 para ocupar el espacio del card de altura fija */}
+        {/* Chat area */}
         <div className="px-5 py-4 flex flex-col gap-2.5 flex-1 overflow-hidden">
-          {/* Envolvemos el grupo en AnimatePresence mode="wait" para que
-              el antiguo haga fade-out ANTES de que aparezca el nuevo.
-              Así nunca hay un flash de blank: el card siempre tiene contenido. */}
           <AnimatePresence mode="wait">
             <motion.div
               key={seqIdx}
@@ -182,18 +142,21 @@ function AIChatMockup() {
 
         {/* Automation chips */}
         <div className="px-5 pb-5 flex flex-wrap gap-2">
-          {chips.map(({ Icon, label }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, scale: 0.88 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#f8f9fc] border border-[#e8edf5] rounded-full"
-            >
-              <Icon size={12} weight="duotone" className="text-[#d4145a]" />
-              <span className="text-[10px] font-semibold text-[#475569]">{label}</span>
-            </motion.div>
-          ))}
+          {h.chips.map((label, i) => {
+            const Icon = chipIcons[i];
+            return (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#f8f9fc] border border-[#e8edf5] rounded-full"
+              >
+                <Icon size={12} weight="duotone" className="text-[#d4145a]" />
+                <span className="text-[10px] font-semibold text-[#475569]">{label}</span>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
     </div>
@@ -206,6 +169,8 @@ export default function Hero() {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 60, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
+  const { t } = useT();
+  const h = t.hero;
 
   return (
     <section
@@ -240,9 +205,9 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               className="text-[3.6rem] sm:text-[4.6rem] lg:text-[6.2rem] font-extrabold text-[#0f172a] leading-[1.04] tracking-tight mb-6"
             >
-              Al alcance de{" "}
-              <span className="text-gradient-fuchsia">todas</span>{" "}
-              las empresas.
+              {h.headline[0]}{" "}
+              <span className="text-gradient-fuchsia">{h.headline[1]}</span>{" "}
+              {h.headline[2]}
             </motion.h1>
 
             <motion.p
@@ -251,8 +216,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-[1.1rem] text-[#475569] leading-relaxed mb-10"
             >
-              En fluentIA creamos soluciones que automatizan, simplifican y se
-              adaptan a la medida de tu empresa. Empieza hoy, crece sin límites.
+              {h.sub}
             </motion.p>
 
             {/* CTAs */}
@@ -268,7 +232,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[#d4145a] text-white font-semibold text-sm shadow-lg shadow-[#d4145a]/30 hover:bg-[#b01049] transition-colors"
               >
-                Solicitar demo gratis
+                {h.cta1}
                 <ArrowRight size={16} weight="bold" />
               </motion.a>
               <motion.a
@@ -277,7 +241,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-[#e8edf5] text-[#334155] font-semibold text-sm hover:border-[#1a2b5f] hover:text-[#1a2b5f] transition-colors bg-white"
               >
-                Conocer soluciones
+                {h.cta2}
               </motion.a>
             </motion.div>
 
@@ -288,7 +252,7 @@ export default function Hero() {
               transition={{ delay: 0.5 }}
               className="flex flex-wrap gap-3"
             >
-              {["Ahorra tiempo", "Reduce costes", "Toma mejores decisiones"].map((tag) => (
+              {h.pills.map((tag) => (
                 <span
                   key={tag}
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-[#475569] px-3 py-1.5 rounded-full bg-[#f8f9fc] border border-[#e8edf5]"

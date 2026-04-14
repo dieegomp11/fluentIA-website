@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { MapPin, EnvelopeSimple, WhatsappLogo, ArrowRight, CheckCircle } from "@phosphor-icons/react";
+import { useT } from "@/lib/i18n";
 
 const MAX_LENGTHS = { nombre: 100, email: 254, empresa: 200, mensaje: 1000 };
 const EMAIL_RE = /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']{2,}$/;
@@ -11,34 +12,36 @@ function sanitize(str: string): string {
   return str.replace(/[<>"'`]/g, "").trim();
 }
 
-function validateForm(form: Record<string, string>): Record<string, string> {
-  const errors: Record<string, string> = {};
-  const nombre = sanitize(form.nombre);
-  const email = sanitize(form.email);
-  const mensaje = sanitize(form.mensaje);
-
-  if (!nombre) errors.nombre = "El nombre es obligatorio.";
-  else if (nombre.length > MAX_LENGTHS.nombre) errors.nombre = `Máximo ${MAX_LENGTHS.nombre} caracteres.`;
-
-  if (!email) errors.email = "El email es obligatorio.";
-  else if (!EMAIL_RE.test(email)) errors.email = "Introduce un email válido.";
-  else if (email.length > MAX_LENGTHS.email) errors.email = "Email demasiado largo.";
-
-  if (form.empresa.length > MAX_LENGTHS.empresa) errors.empresa = `Máximo ${MAX_LENGTHS.empresa} caracteres.`;
-
-  if (!mensaje) errors.mensaje = "El mensaje es obligatorio.";
-  else if (mensaje.length > MAX_LENGTHS.mensaje) errors.mensaje = `Máximo ${MAX_LENGTHS.mensaje} caracteres.`;
-
-  return errors;
-}
-
 export default function CTABanner() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { t } = useT();
+  const c = t.contact;
 
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ nombre: "", email: "", empresa: "", mensaje: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  function validateForm(form: Record<string, string>): Record<string, string> {
+    const errs: Record<string, string> = {};
+    const nombre = sanitize(form.nombre);
+    const email = sanitize(form.email);
+    const mensaje = sanitize(form.mensaje);
+
+    if (!nombre) errs.nombre = c.errNameRequired;
+    else if (nombre.length > MAX_LENGTHS.nombre) errs.nombre = c.errNameMax;
+
+    if (!email) errs.email = c.errEmailRequired;
+    else if (!EMAIL_RE.test(email)) errs.email = c.errEmailInvalid;
+    else if (email.length > MAX_LENGTHS.email) errs.email = c.errEmailMax;
+
+    if (form.empresa.length > MAX_LENGTHS.empresa) errs.empresa = c.errCompanyMax;
+
+    if (!mensaje) errs.mensaje = c.errMessageRequired;
+    else if (mensaje.length > MAX_LENGTHS.mensaje) errs.mensaje = c.errMessageMax;
+
+    return errs;
+  }
 
   function handleChange(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -55,6 +58,12 @@ export default function CTABanner() {
     setSent(true);
   }
 
+  const infoCards = [
+    { icon: MapPin,        color: "#d4145a", bg: "bg-pink-50",    label: c.locationLabel, value: "Albacete, España" },
+    { icon: EnvelopeSimple,color: "#2563eb", bg: "bg-blue-50",    label: c.emailLabel,    value: "hola@fluentia.es" },
+    { icon: WhatsappLogo,  color: "#10b981", bg: "bg-emerald-50", label: c.whatsappLabel, value: "+34 600 000 000" },
+  ];
+
   return (
     <section id="contacto" className="pt-32 pb-24 lg:pt-40 lg:pb-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -67,7 +76,7 @@ export default function CTABanner() {
             transition={{ duration: 0.4 }}
             className="text-xs font-bold text-[#d4145a] uppercase tracking-widest mb-4"
           >
-            Contacto
+            {c.label}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -75,8 +84,8 @@ export default function CTABanner() {
             transition={{ duration: 0.55, delay: 0.05 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
           >
-            Hablemos de tu{" "}
-            <span className="text-gradient-fuchsia">negocio.</span>
+            {c.heading[0]}{" "}
+            <span className="text-gradient-fuchsia">{c.heading[1]}</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -84,7 +93,7 @@ export default function CTABanner() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[#64748b] leading-relaxed"
           >
-            Cuéntanos qué necesitas y te preparamos una demo personalizada sin compromiso.
+            {c.sub}
           </motion.p>
         </div>
 
@@ -97,30 +106,7 @@ export default function CTABanner() {
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-5"
           >
-            {/* Info cards */}
-            {[
-              {
-                icon: MapPin,
-                color: "#d4145a",
-                bg: "bg-pink-50",
-                label: "Ubicación",
-                value: "Albacete, España",
-              },
-              {
-                icon: EnvelopeSimple,
-                color: "#2563eb",
-                bg: "bg-blue-50",
-                label: "Email",
-                value: "hola@fluentia.es",
-              },
-              {
-                icon: WhatsappLogo,
-                color: "#10b981",
-                bg: "bg-emerald-50",
-                label: "WhatsApp",
-                value: "+34 600 000 000",
-              },
-            ].map(({ icon: Icon, color, bg, label, value }) => (
+            {infoCards.map(({ icon: Icon, color, bg, label, value }) => (
               <div key={label} className="flex items-center gap-4 p-5 bg-[#f8f9fc] rounded-2xl border border-[#e8edf5]">
                 <div className={`${bg} w-11 h-11 rounded-xl flex items-center justify-center shrink-0`}>
                   <Icon size={22} weight="duotone" style={{ color }} />
@@ -135,13 +121,9 @@ export default function CTABanner() {
             {/* Promise banner */}
             <div className="noise-bg relative bg-[#0e1a3d] rounded-2xl p-6 overflow-hidden mt-2">
               <div className="absolute top-0 right-0 w-40 h-40 bg-[#d4145a] opacity-10 blur-3xl rounded-full pointer-events-none" />
-              <p className="relative z-10 text-sm font-bold text-white mb-3">¿Por qué elegirnos?</p>
+              <p className="relative z-10 text-sm font-bold text-white mb-3">{c.whyUs}</p>
               <ul className="relative z-10 flex flex-col gap-2">
-                {[
-                  "Demo gratuita y sin compromiso",
-                  "Implementación en menos de 24 h",
-                  "Empresa local, trato cercano",
-                ].map((item) => (
+                {c.whyItems.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-xs text-[#94a3b8]">
                     <CheckCircle size={13} weight="fill" className="text-[#d4145a] shrink-0" />
                     {item}
@@ -168,19 +150,17 @@ export default function CTABanner() {
                 <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mb-2">
                   <CheckCircle size={36} weight="fill" className="text-emerald-500" />
                 </div>
-                <h3 className="text-xl font-bold text-[#0f172a]">¡Mensaje recibido!</h3>
-                <p className="text-sm text-[#64748b] max-w-xs leading-relaxed">
-                  Nos pondremos en contacto contigo en breve para preparar tu demo personalizada.
-                </p>
+                <h3 className="text-xl font-bold text-[#0f172a]">{c.sentTitle}</h3>
+                <p className="text-sm text-[#64748b] max-w-xs leading-relaxed">{c.sentDesc}</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-[#475569]">Nombre</label>
+                    <label className="text-xs font-semibold text-[#475569]">{c.fieldName}</label>
                     <input
                       type="text"
-                      placeholder="Tu nombre"
+                      placeholder={c.fieldNamePh}
                       value={form.nombre}
                       onChange={(e) => handleChange("nombre", e.target.value)}
                       maxLength={MAX_LENGTHS.nombre}
@@ -189,7 +169,7 @@ export default function CTABanner() {
                     {errors.nombre && <p className="text-[11px] text-red-500">{errors.nombre}</p>}
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-[#475569]">Email</label>
+                    <label className="text-xs font-semibold text-[#475569]">{c.fieldEmail}</label>
                     <input
                       type="email"
                       placeholder="tu@email.com"
@@ -202,10 +182,10 @@ export default function CTABanner() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-[#475569]">Empresa o actividad</label>
+                  <label className="text-xs font-semibold text-[#475569]">{c.fieldCompany}</label>
                   <input
                     type="text"
-                    placeholder="Ej: Clínica dental, fontanero autónomo…"
+                    placeholder={c.fieldCompanyPh}
                     value={form.empresa}
                     onChange={(e) => handleChange("empresa", e.target.value)}
                     maxLength={MAX_LENGTHS.empresa}
@@ -214,10 +194,10 @@ export default function CTABanner() {
                   {errors.empresa && <p className="text-[11px] text-red-500">{errors.empresa}</p>}
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-[#475569]">¿En qué podemos ayudarte?</label>
+                  <label className="text-xs font-semibold text-[#475569]">{c.fieldMessage}</label>
                   <textarea
                     rows={4}
-                    placeholder="Cuéntanos qué necesitas…"
+                    placeholder={c.fieldMessagePh}
                     value={form.mensaje}
                     onChange={(e) => handleChange("mensaje", e.target.value)}
                     maxLength={MAX_LENGTHS.mensaje}
@@ -231,12 +211,10 @@ export default function CTABanner() {
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#d4145a] text-white font-semibold text-sm shadow-lg shadow-[#d4145a]/25 hover:bg-[#b01049] transition-colors"
                 >
-                  Solicitar demo gratis
+                  {c.submit}
                   <ArrowRight size={15} weight="bold" />
                 </motion.button>
-                <p className="text-[11px] text-[#94a3b8] text-center">
-                  Respuesta en menos de 24 h
-                </p>
+                <p className="text-[11px] text-[#94a3b8] text-center">{c.responseTime}</p>
               </form>
             )}
           </motion.div>

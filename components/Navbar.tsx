@@ -4,19 +4,23 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { List, X } from "@phosphor-icons/react";
-
-const links = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Beneficios", href: "#beneficios" },
-  { label: "Soluciones", href: "#soluciones" },
-  { label: "Precios", href: "#precios" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Contacto", href: "#contacto" },
-];
+import { useT } from "@/lib/i18n";
+import LangSwitcher from "@/components/LangSwitcher";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { t } = useT();
+  const n = t.nav;
+
+  const links = [
+    { label: n.inicio,     href: "#inicio" },
+    { label: n.beneficios, href: "#beneficios" },
+    { label: n.soluciones, href: "#soluciones" },
+    { label: n.precios,    href: "#precios" },
+    { label: n.nosotros,   href: "#nosotros" },
+    { label: n.contacto,   href: "#contacto" },
+  ];
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 24);
@@ -66,7 +70,7 @@ export default function Navbar() {
           </motion.div>
         </a>
 
-        {/* Right nav links — pulled left against the logo, CTA at far right */}
+        {/* Right nav links + lang switcher + CTA */}
         <div className="flex items-center gap-1 pl-8">
           {links.slice(3).map((link) => (
             <a
@@ -78,13 +82,14 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#d4145a] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
             </a>
           ))}
+          <LangSwitcher className="ml-3" />
           <motion.a
             href="#contacto"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="ml-auto px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors"
+            className="ml-3 px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors"
           >
-            Solicitar demo
+            {n.cta}
           </motion.a>
         </div>
       </div>
@@ -150,8 +155,17 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="mt-8 px-5 py-3.5 rounded-full bg-[#d4145a] text-white text-base font-semibold text-center shadow-lg shadow-[#d4145a]/20"
               >
-                Solicitar demo
+                {n.cta}
               </motion.a>
+              {/* Language switcher in mobile menu */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.08 + links.length * 0.06 + 0.15 }}
+                className="mt-6 flex justify-center"
+              >
+                <LangSwitcher />
+              </motion.div>
             </nav>
           </motion.div>
         )}

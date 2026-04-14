@@ -3,41 +3,17 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MapPin, Heartbeat, Rocket, Users } from "@phosphor-icons/react";
+import { useT } from "@/lib/i18n";
 
-const values = [
-  {
-    icon: MapPin,
-    color: "#d4145a",
-    bg: "bg-pink-50",
-    title: "Nacidos en Albacete",
-    desc: "Somos una empresa local, orgullosos de nuestra ciudad. Conocemos de primera mano las necesidades de los trabajadores y empresas de Albacete.",
-  },
-  {
-    icon: Heartbeat,
-    color: "#2563eb",
-    bg: "bg-blue-50",
-    title: "Compromiso real",
-    desc: "No somos una multinacional. Somos vecinos que queremos ver crecer a las empresas y autónomos de nuestra tierra con tecnología de verdad.",
-  },
-  {
-    icon: Rocket,
-    color: "#7c3aed",
-    bg: "bg-violet-50",
-    title: "Nacidos en 2026",
-    desc: "Arrancamos con una misión clara: que ningún negocio albacetense se quede atrás por falta de acceso a la inteligencia artificial.",
-  },
-  {
-    icon: Users,
-    color: "#10b981",
-    bg: "bg-emerald-50",
-    title: "Para ti, para tu equipo",
-    desc: "Diseñamos cada solución pensando en el día a día de quien trabaja. Sin tecnicismos, sin complicaciones, con resultados desde el primer momento.",
-  },
-];
+const valueIcons = [MapPin, Heartbeat, Rocket, Users];
+const valueColors = ["#d4145a", "#2563eb", "#7c3aed", "#10b981"];
+const valueBgs    = ["bg-pink-50", "bg-blue-50", "bg-violet-50", "bg-emerald-50"];
 
 export default function Testimonials() {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+  const { t } = useT();
+  const tm = t.testimonials;
 
   return (
     <section id="nosotros" className="py-24 lg:py-32 bg-[#f8f9fc] overflow-hidden">
@@ -51,7 +27,7 @@ export default function Testimonials() {
             transition={{ duration: 0.4 }}
             className="text-xs font-bold text-[#d4145a] uppercase tracking-widest mb-4"
           >
-            Nosotros
+            {tm.label}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -59,8 +35,8 @@ export default function Testimonials() {
             transition={{ duration: 0.55, delay: 0.05 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
           >
-            De Albacete,{" "}
-            <span className="text-gradient-fuchsia">para Albacete.</span>
+            {tm.heading[0]}{" "}
+            <span className="text-gradient-fuchsia">{tm.heading[1]}</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -68,7 +44,7 @@ export default function Testimonials() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[#64748b] leading-relaxed"
           >
-            fluentIA nació en 2026 con una idea sencilla: que la inteligencia artificial esté al alcance de cualquier negocio, empresa o autónomo de nuestra ciudad.
+            {tm.sub}
           </motion.p>
         </div>
 
@@ -80,7 +56,6 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="noise-bg relative bg-[#0e1a3d] rounded-3xl overflow-hidden mb-10"
         >
-          {/* Decorative glows */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#d4145a] opacity-10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#2563eb] opacity-10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#7c3aed] opacity-10 blur-3xl rounded-full pointer-events-none" />
@@ -90,14 +65,14 @@ export default function Testimonials() {
             <div className="flex-1 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4145a]/20 border border-[#d4145a]/30 mb-6">
                 <MapPin size={13} weight="fill" className="text-[#d4145a]" />
-                <span className="text-[11px] font-bold text-[#d4145a] uppercase tracking-widest">Albacete, España</span>
+                <span className="text-[11px] font-bold text-[#d4145a] uppercase tracking-widest">{tm.locationBadge}</span>
               </div>
               <h3 className="text-2xl lg:text-4xl font-extrabold text-white leading-tight mb-4">
-                Una empresa de aquí,<br />
-                <span className="text-[#d4145a]">para los de aquí.</span>
+                {tm.bannerTitle[0]}<br />
+                <span className="text-[#d4145a]">{tm.bannerTitle[1]}</span>
               </h3>
               <p className="text-[#94a3b8] leading-relaxed max-w-lg">
-                Somos un equipo local que decidió en 2026 que las empresas y autónomos de Albacete merecen las mismas herramientas de IA que las grandes corporaciones. Sin barreras. Sin excusas.
+                {tm.bannerDesc}
               </p>
             </div>
 
@@ -114,48 +89,12 @@ export default function Testimonials() {
                       <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                     </filter>
                   </defs>
-
                   <rect width="300" height="225" fill="url(#dots)" />
-
-                  {/*
-                    Spain mainland — puntos calculados desde coordenadas geográficas reales
-                    viewBox 0 0 300 225, margen 10px
-                    x = (lon - (-9.5)) / 12.8 * 280 + 10
-                    y = (43.8 - lat) / 7.8 * 200 + 10
-                    Sentido horario desde Cabo Ortegal (NO)
-                  */}
                   <path
-                    d="
-                      M 45,10
-                      L 33,15 L 20,22 L 14,33 L 27,51
-                      L 23,59
-                      C 38,61 52,65 69,72
-                      C 70,78 72,87 73,82 L 73,95
-                      C 67,107 67,112 69,123
-                      C 68,130 65,141 65,141
-                      C 63,155 58,172 56,182
-                      C 67,182 72,188 80,197
-                      L 95,210 L 99,208
-                      C 110,196 122,192 122,192
-                      C 135,196 148,196 163,190
-                      C 175,185 188,178 202,169
-                      L 207,151 L 207,142 L 211,121
-                      C 218,108 230,95 243,80
-                      L 263,72 L 289,46
-                      C 260,38 233,38 233,38
-                      C 220,32 205,24 177,19
-                      L 135,17 L 93,17 L 45,10 Z
-                    "
-                    fill="white"
-                    fillOpacity="0.10"
-                    stroke="white"
-                    strokeOpacity="0.30"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
+                    d="M 45,10 L 33,15 L 20,22 L 14,33 L 27,51 L 23,59 C 38,61 52,65 69,72 C 70,78 72,87 73,82 L 73,95 C 67,107 67,112 69,123 C 68,130 65,141 65,141 C 63,155 58,172 56,182 C 67,182 72,188 80,197 L 95,210 L 99,208 C 110,196 122,192 122,192 C 135,196 148,196 163,190 C 175,185 188,178 202,169 L 207,151 L 207,142 L 211,121 C 218,108 230,95 243,80 L 263,72 L 289,46 C 260,38 233,38 233,38 C 220,32 205,24 177,19 L 135,17 L 93,17 L 45,10 Z"
+                    fill="white" fillOpacity="0.10" stroke="white" strokeOpacity="0.30"
+                    strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"
                   />
-
-                  {/* Albacete — lon -1.9°, lat 38.9° → (176, 136) */}
                   <circle cx="176" cy="136" r="20" fill="#d4145a" fillOpacity="0.0">
                     <animate attributeName="r" values="6;20;6" dur="2.8s" repeatCount="indefinite" />
                     <animate attributeName="fill-opacity" values="0.25;0;0.25" dur="2.8s" repeatCount="indefinite" />
@@ -169,13 +108,8 @@ export default function Testimonials() {
                   <text x="184" y="132" fontSize="8.5" fill="white" fillOpacity="0.95" fontFamily="sans-serif" fontWeight="700" letterSpacing="0.3">Albacete</text>
                 </svg>
               </div>
-              {/* Mini stats below map */}
               <div className="flex gap-3 w-full max-w-[320px]">
-                {[
-                  { num: "2026", label: "Fundación" },
-                  { num: "100%", label: "Local" },
-                  { num: "<24h", label: "Arranque" },
-                ].map(({ num, label }) => (
+                {tm.stats.map(({ num, label }) => (
                   <div key={label} className="flex-1 bg-white/5 border border-white/10 rounded-xl py-3 text-center">
                     <p className="text-lg font-extrabold text-white">{num}</p>
                     <p className="text-[10px] text-[#94a3b8] font-medium">{label}</p>
@@ -188,32 +122,37 @@ export default function Testimonials() {
 
         {/* Value cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {values.map(({ icon: Icon, color, bg, title, desc }, i) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -8, boxShadow: `0 20px 48px ${color}18` }}
-              className="card-shine group bg-white rounded-2xl border border-[#e8edf5] p-6 flex flex-col gap-4 cursor-default transition-all duration-300"
-            >
-              <div className={`${bg} w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                <Icon size={22} weight="duotone" style={{ color }} />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-[#0f172a] mb-1.5">{title}</h4>
-                <p className="text-xs text-[#64748b] leading-relaxed">{desc}</p>
-              </div>
+          {tm.values.map(({ title, desc }, i) => {
+            const Icon = valueIcons[i];
+            const color = valueColors[i];
+            const bg = valueBgs[i];
+            return (
               <motion.div
-                className="h-[2px] rounded-full mt-auto"
-                style={{ background: color }}
-                initial={{ scaleX: 0, originX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.35 }}
-              />
-            </motion.div>
-          ))}
+                key={title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8, boxShadow: `0 20px 48px ${color}18` }}
+                className="card-shine group bg-white rounded-2xl border border-[#e8edf5] p-6 flex flex-col gap-4 cursor-default transition-all duration-300"
+              >
+                <div className={`${bg} w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon size={22} weight="duotone" style={{ color }} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#0f172a] mb-1.5">{title}</h4>
+                  <p className="text-xs text-[#64748b] leading-relaxed">{desc}</p>
+                </div>
+                <motion.div
+                  className="h-[2px] rounded-full mt-auto"
+                  style={{ background: color }}
+                  initial={{ scaleX: 0, originX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.35 }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
