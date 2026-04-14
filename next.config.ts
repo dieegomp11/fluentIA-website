@@ -54,10 +54,19 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Exportación estática para GitHub Pages
+  output: "export",
+
+  // Necesario para que Next.js Image funcione sin servidor
+  images: {
+    unoptimized: true,
+  },
+
+  // Las cabeceras solo aplican cuando hay servidor (Vercel, etc.)
+  // En GitHub Pages se ignoran (host estático sin server)
   async headers() {
     return [
       {
-        // Aplica las cabeceras de seguridad a todas las rutas
         source: "/:path*",
         headers: securityHeaders,
       },
