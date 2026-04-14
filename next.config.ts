@@ -53,9 +53,8 @@ const securityHeaders = [
   },
 ];
 
-// En GitHub Actions el repo se llama fluentIA-website → basePath necesario
-const isPagesDeployment = process.env.GITHUB_ACTIONS === "true";
-const basePath = isPagesDeployment ? "/fluentIA-website" : "";
+// En GitHub Actions se inyecta NEXT_PUBLIC_BASE_PATH=/fluentIA-website
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
   // Exportación estática para GitHub Pages

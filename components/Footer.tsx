@@ -47,7 +47,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-1">
             <Image
-              src="/logo2.png"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo2.png`}
               alt="fluentIA"
               width={130}
               height={38}

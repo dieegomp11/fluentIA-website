@@ -118,7 +118,7 @@ function AIChatMockup() {
         {/* Header */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-[#f1f5f9] bg-[#f8f9fc]">
           <div className="bg-white rounded-xl px-3 py-1.5 shadow-sm border border-[#e8edf5] shrink-0">
-            <Image src="/logo3.png" alt="fluentIA" width={110} height={28} className="h-7 w-auto" />
+            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo3.png`} alt="fluentIA" width={110} height={28} className="h-7 w-auto" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-light text-[#64748b] tracking-widest text-[11px]">assistant</span>

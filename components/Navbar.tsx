@@ -56,7 +56,7 @@ export default function Navbar() {
         <a href="#inicio" className="flex items-center justify-center">
           <motion.div whileHover={{ scale: 1.04 }} transition={{ type: "spring", stiffness: 300 }}>
             <Image
-              src="/logo.png"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
               alt="fluentIA"
               width={240}
               height={72}
@@ -92,7 +92,7 @@ export default function Navbar() {
       {/* Mobile: logo left + toggle */}
       <div className="lg:hidden flex items-center justify-between max-w-7xl mx-auto px-6 h-28">
         <a href="#inicio" className="flex items-center shrink-0">
-          <Image src="/logo.png" alt="fluentIA" width={140} height={40} priority />
+          <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`} alt="fluentIA" width={140} height={40} priority />
         </a>
         <button
           className="p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
