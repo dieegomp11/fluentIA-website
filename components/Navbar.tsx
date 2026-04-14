@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* Left half: LangSwitcher far-left, links pushed right toward logo */}
         <div className="flex-1 flex items-center">
           <LangSwitcher className="shrink-0 mr-3" />
-          <nav className="flex items-center ml-auto pr-10 xl:pr-14">
+          <nav className="flex items-center ml-auto pr-20 xl:pr-24">
             {links.slice(0, 3).map((link) => (
               <a key={link.href} href={link.href} className={navLinkClass}>
                 {link.label}
@@ -76,7 +76,7 @@ export default function Navbar() {
 
         {/* Right half: links pushed left toward logo, CTA far-right */}
         <div className="flex-1 flex items-center">
-          <nav className="flex items-center pl-10 xl:pl-14">
+          <nav className="flex items-center pl-20 xl:pl-24">
             {links.slice(3).map((link) => (
               <a key={link.href} href={link.href} className={navLinkClass}>
                 {link.label}
