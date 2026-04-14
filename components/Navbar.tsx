@@ -28,6 +28,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  const navLinkClass =
+    "relative px-3 py-2 text-sm font-medium text-[#334155] hover:text-[#1a2b5f] transition-colors group whitespace-nowrap";
+  const underlineClass =
+    "absolute bottom-0 left-3 right-3 h-[2px] bg-[#d4145a] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full";
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -39,65 +44,68 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      {/* Desktop: 3-col grid so logo always sits centered between equal-width link groups */}
-      <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center max-w-7xl mx-auto px-6 lg:px-8 h-28">
+      {/* ─── Desktop nav (lg+): flex + absolutely-centred logo ─── */}
+      <div className="hidden lg:flex relative items-center max-w-7xl mx-auto px-6 lg:px-8 h-24 xl:h-28 w-full">
 
-        {/* Left nav links — pushed right against the logo */}
-        <nav className="flex items-center gap-1 justify-end pr-8">
-          {links.slice(0, 3).map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="relative px-4 py-2 text-sm font-medium text-[#334155] hover:text-[#1a2b5f] transition-colors group"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#d4145a] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-            </a>
-          ))}
-        </nav>
+        {/* Left half: LangSwitcher far-left, links pushed right toward logo */}
+        <div className="flex-1 flex items-center">
+          <LangSwitcher className="shrink-0 mr-3" />
+          <nav className="flex items-center ml-auto pr-10 xl:pr-14">
+            {links.slice(0, 3).map((link) => (
+              <a key={link.href} href={link.href} className={navLinkClass}>
+                {link.label}
+                <span className={underlineClass} />
+              </a>
+            ))}
+          </nav>
+        </div>
 
-        {/* Logo — center column */}
-        <a href="#inicio" className="flex items-center justify-center">
+        {/* Logo: absolutely centred in the header */}
+        <a href="#inicio" className="absolute left-1/2 -translate-x-1/2 flex items-center z-10">
           <motion.div whileHover={{ scale: 1.04 }} transition={{ type: "spring", stiffness: 300 }}>
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
               alt="fluentIA"
-              width={240}
-              height={72}
+              width={220}
+              height={66}
               priority
-              className="h-[90px] w-auto"
+              className="h-[76px] xl:h-[88px] w-auto"
             />
           </motion.div>
         </a>
 
-        {/* Right nav links + lang switcher + CTA */}
-        <div className="flex items-center gap-1 pl-8">
-          {links.slice(3).map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="relative px-4 py-2 text-sm font-medium text-[#334155] hover:text-[#1a2b5f] transition-colors group"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#d4145a] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-            </a>
-          ))}
-          <LangSwitcher className="ml-3" />
+        {/* Right half: links pushed left toward logo, CTA far-right */}
+        <div className="flex-1 flex items-center">
+          <nav className="flex items-center pl-10 xl:pl-14">
+            {links.slice(3).map((link) => (
+              <a key={link.href} href={link.href} className={navLinkClass}>
+                {link.label}
+                <span className={underlineClass} />
+              </a>
+            ))}
+          </nav>
           <motion.a
             href="#contacto"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="ml-3 px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors whitespace-nowrap"
+            className="ml-auto px-4 xl:px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors whitespace-nowrap"
           >
             {n.cta}
           </motion.a>
         </div>
       </div>
 
-      {/* Mobile: logo centrado + toggle derecha */}
-      <div className="lg:hidden relative flex items-center justify-center max-w-7xl mx-auto px-6 h-28">
+      {/* ─── Mobile/tablet bar (below lg): centred logo + hamburger ─── */}
+      <div className="lg:hidden relative flex items-center justify-center max-w-7xl mx-auto px-6 h-20 sm:h-24">
         <a href="#inicio" className="flex items-center">
-          <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`} alt="fluentIA" width={140} height={40} priority />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
+            alt="fluentIA"
+            width={140}
+            height={40}
+            priority
+            className="h-12 sm:h-14 w-auto"
+          />
         </a>
         <button
           className="absolute right-6 p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
@@ -108,7 +116,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu — pantalla completa, desliza desde la derecha */}
+      {/* ─── Mobile fullscreen menu ─── */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -118,10 +126,16 @@ export default function Navbar() {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col"
           >
-            {/* Cabecera del menú fullscreen */}
-            <div className="flex items-center justify-between px-6 h-28 border-b border-[#e8edf5] shrink-0">
+            {/* Menu header */}
+            <div className="flex items-center justify-between px-6 h-20 sm:h-24 border-b border-[#e8edf5] shrink-0">
               <a href="#inicio" onClick={() => setOpen(false)} className="flex items-center">
-                <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`} alt="fluentIA" width={140} height={40} priority={false} />
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
+                  alt="fluentIA"
+                  width={140}
+                  height={40}
+                  className="h-12 sm:h-14 w-auto"
+                />
               </a>
               <button
                 className="p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
@@ -157,7 +171,6 @@ export default function Navbar() {
               >
                 {n.cta}
               </motion.a>
-              {/* Language switcher in mobile menu */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

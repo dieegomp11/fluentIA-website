@@ -24,7 +24,7 @@ export default function Benefits() {
   const b = t.benefits;
 
   return (
-    <section id="beneficios" className="py-24 lg:py-32 bg-white">
+    <section id="beneficios" className="py-20 md:py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="max-w-2xl mb-16">

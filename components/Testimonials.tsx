@@ -16,7 +16,7 @@ export default function Testimonials() {
   const tm = t.testimonials;
 
   return (
-    <section id="nosotros" className="py-24 lg:py-32 bg-[#f8f9fc] overflow-hidden">
+    <section id="nosotros" className="py-20 md:py-24 lg:py-32 bg-[#f8f9fc] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Header */}

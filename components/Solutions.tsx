@@ -31,7 +31,7 @@ export default function Solutions() {
   const s = t.solutions;
 
   return (
-    <section id="soluciones" className="py-24 lg:py-32 bg-[#f8f9fc]">
+    <section id="soluciones" className="py-20 md:py-24 lg:py-32 bg-[#f8f9fc]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="max-w-2xl mb-16">
