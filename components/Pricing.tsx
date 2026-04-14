@@ -45,6 +45,7 @@ const plans = [
     desc: "Ideal para autónomos y pequeñas empresas que quieren automatizar su facturación.",
     priceMonthly: "29,90",
     priceAnnual: "19,90",
+    extraProfPrice: 4,
     cta: "Empezar ahora",
     featured: false,
     badge: "Más vendido",
@@ -62,6 +63,7 @@ const plans = [
     desc: "El asistente de IA que tu empresa necesita para escalar sin complicaciones.",
     priceMonthly: "49,90",
     priceAnnual: "39,90",
+    extraProfPrice: 7,
     cta: "Probar IA",
     featured: true,
     badge: "Más popular",
@@ -77,8 +79,9 @@ const plans = [
     icon: "📅",
     title: "Agenda inteligente con chatbot",
     desc: "Gestión de citas y atención al cliente automatizada 24/7.",
-    priceMonthly: "149,90",
-    priceAnnual: "124,90",
+    priceMonthly: "89,90",
+    priceAnnual: "79,90",
+    extraProfPrice: 15,
     cta: "Solicitar demo",
     featured: false,
     badge: "Mejor valorado",
@@ -97,6 +100,7 @@ const plans = [
     priceMonthly: "179,90",
     priceAnnual: "149,90",
     cta: "Ver solución",
+    contactPrice: true,
     featured: false,
     badge: "Todo incluido",
     badgeColor: "#2563eb",
@@ -115,7 +119,9 @@ function PricingCard({
   desc,
   priceMonthly,
   priceAnnual,
+  extraProfPrice,
   cta,
+  contactPrice,
   featured,
   badge,
   badgeColor,
@@ -176,74 +182,94 @@ function PricingCard({
           {desc}
         </p>
 
-        {/* Billing toggle */}
-        <div className="flex items-center gap-3 mb-4">
-          <button
-            onClick={() => setIsAnnual(true)}
-            className={`text-xs font-semibold transition-colors ${
-              isAnnual
-                ? featured ? "text-white" : "text-[#0f172a]"
-                : featured ? "text-[#475569]" : "text-[#94a3b8]"
-            }`}
-          >
-            Anual
-          </button>
-          <button
-            onClick={() => setIsAnnual(!isAnnual)}
-            className={`relative w-10 h-5 rounded-full transition-colors duration-300 shrink-0 ${
-              !isAnnual ? "bg-[#d4145a]" : featured ? "bg-[#1e3575]" : "bg-[#e2e8f0]"
-            }`}
-            aria-label="Toggle billing"
-          >
-            <span
-              className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300 ${
-                !isAnnual ? "translate-x-5" : "translate-x-0"
+        {/* Billing toggle — oculto si el precio es por consulta */}
+        {!contactPrice && (
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <button
+              onClick={() => setIsAnnual(true)}
+              className={`text-xs font-semibold transition-colors ${
+                isAnnual
+                  ? featured ? "text-white" : "text-[#0f172a]"
+                  : featured ? "text-[#475569]" : "text-[#94a3b8]"
               }`}
-            />
-          </button>
-          <button
-            onClick={() => setIsAnnual(false)}
-            className={`text-xs font-semibold transition-colors ${
-              !isAnnual
-                ? featured ? "text-white" : "text-[#0f172a]"
-                : featured ? "text-[#475569]" : "text-[#94a3b8]"
-            }`}
-          >
-            Mensual
-          </button>
-        </div>
+            >
+              Anual
+            </button>
+            <button
+              onClick={() => setIsAnnual(!isAnnual)}
+              className={`relative w-10 h-5 rounded-full transition-colors duration-300 shrink-0 ${
+                !isAnnual ? "bg-[#d4145a]" : featured ? "bg-[#1e3575]" : "bg-[#e2e8f0]"
+              }`}
+              aria-label="Toggle billing"
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300 ${
+                  !isAnnual ? "translate-x-5" : "translate-x-0"
+                }`}
+              />
+            </button>
+            <button
+              onClick={() => setIsAnnual(false)}
+              className={`text-xs font-semibold transition-colors ${
+                !isAnnual
+                  ? featured ? "text-white" : "text-[#0f172a]"
+                  : featured ? "text-[#475569]" : "text-[#94a3b8]"
+              }`}
+            >
+              Mensual
+            </button>
+          </div>
+        )}
 
         {/* Price */}
         <div className="mb-4">
-          <motion.div
-            key={price}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="flex items-baseline gap-1"
-          >
-            <span
-              className={`text-3xl font-extrabold tracking-tight ${
-                featured ? "text-white" : "text-[#0f172a]"
-              }`}
-            >
-              {price}€
-            </span>
-            <span
-              className={`text-sm font-medium whitespace-nowrap ${
-                featured ? "text-[#94a3b8]" : "text-[#64748b]"
-              }`}
-            >
-              + IVA / mes
-            </span>
-          </motion.div>
-          <p
-            className={`text-xs mt-1 ${
-              featured ? "text-[#64748b]" : "text-[#94a3b8]"
-            }`}
-          >
-            {isAnnual ? "Facturación anual" : "Sin permanencia"}
-          </p>
+          {contactPrice ? (
+            <div className="flex flex-col gap-1">
+              <span className={`text-xl font-extrabold tracking-tight ${featured ? "text-white" : "text-[#0f172a]"}`}>
+                Precio a consultar
+              </span>
+              <p className={`text-xs ${featured ? "text-[#64748b]" : "text-[#94a3b8]"}`}>
+                Contáctanos para recibir una propuesta personalizada
+              </p>
+            </div>
+          ) : (
+            <>
+              <motion.div
+                key={price}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-baseline gap-1"
+              >
+                <span
+                  className={`text-3xl font-extrabold tracking-tight ${
+                    featured ? "text-white" : "text-[#0f172a]"
+                  }`}
+                >
+                  {price}€
+                </span>
+                <span
+                  className={`text-sm font-medium whitespace-nowrap ${
+                    featured ? "text-[#94a3b8]" : "text-[#64748b]"
+                  }`}
+                >
+                  + IVA / mes
+                </span>
+              </motion.div>
+              <p
+                className={`text-xs mt-1 ${
+                  featured ? "text-[#64748b]" : "text-[#94a3b8]"
+                }`}
+              >
+                1 profesional · {isAnnual ? "Facturación anual" : "Sin permanencia"}
+              </p>
+              {extraProfPrice && (
+                <p className={`text-xs mt-0.5 ${featured ? "text-[#475569]" : "text-[#94a3b8]"}`}>
+                  Profesional extra: +{extraProfPrice}€ + IVA / mes
+                </p>
+              )}
+            </>
+          )}
         </div>
 
         {/* Features */}
@@ -283,7 +309,7 @@ function PricingCard({
               : "bg-[#f8f9fc] border border-[#e8edf5] text-[#0f172a] hover:border-[#1a2b5f] hover:text-[#1a2b5f]"
           }`}
         >
-          {cta}
+          Pedir más información
           <ArrowRight size={14} weight="bold" />
         </motion.a>
       </div>
