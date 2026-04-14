@@ -87,7 +87,7 @@ export default function Navbar() {
             href="#contacto"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="ml-3 px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors"
+            className="ml-3 px-5 py-2.5 rounded-full bg-[#d4145a] text-white text-sm font-semibold shadow-md shadow-[#d4145a]/20 hover:bg-[#b01049] transition-colors whitespace-nowrap"
           >
             {n.cta}
           </motion.a>

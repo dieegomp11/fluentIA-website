@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useT } from "@/lib/i18n";
 
 const techs = [
   {
@@ -72,6 +73,8 @@ const techs = [
 export default function TechStack() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { t } = useT();
+  const ts = t.techStack;
 
   return (
     <section className="py-20 lg:py-28 bg-white">
@@ -84,7 +87,7 @@ export default function TechStack() {
             transition={{ duration: 0.4 }}
             className="text-xs font-bold text-[#d4145a] uppercase tracking-widest mb-4"
           >
-            Stack tecnológico
+            {ts.label}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -92,8 +95,8 @@ export default function TechStack() {
             transition={{ duration: 0.55, delay: 0.05 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
           >
-            Tecnologías{" "}
-            <span className="text-gradient-fuchsia">de primer nivel.</span>
+            {ts.heading[0]}{" "}
+            <span className="text-gradient-fuchsia">{ts.heading[1]}</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -101,7 +104,7 @@ export default function TechStack() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[#64748b] leading-relaxed max-w-xl mx-auto"
           >
-            Construimos sobre las plataformas más avanzadas del mundo para garantizar soluciones fiables, seguras y escalables.
+            {ts.sub}
           </motion.p>
         </div>
 
@@ -117,18 +120,15 @@ export default function TechStack() {
               className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-[#e8edf5] bg-white cursor-default transition-all duration-300 hover:shadow-lg"
               style={{ ["--tech-color" as string]: color }}
             >
-              {/* Icon circle */}
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                 style={{ background: bg }}
               >
                 {svg}
               </div>
-              {/* Name */}
               <span className="text-xs font-bold text-[#475569] tracking-wide group-hover:text-[#0f172a] transition-colors">
                 {name}
               </span>
-              {/* Color line */}
               <div
                 className="h-0.5 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: color }}

@@ -143,6 +143,11 @@ export const translations = {
       errMessageRequired: "El mensaje es obligatorio.",
       errMessageMax: "Máximo 1000 caracteres.",
     },
+    techStack: {
+      label: "Stack tecnológico",
+      heading: ["Tecnologías", "de primer nivel."],
+      sub: "Construimos sobre las plataformas más avanzadas del mundo para garantizar soluciones fiables, seguras y escalables.",
+    },
     footer: {
       tagline: "Tecnología inteligente al alcance de todas las empresas.",
       columns: [
@@ -295,6 +300,11 @@ export const translations = {
       errCompanyMax: "Maximum 200 characters.",
       errMessageRequired: "Message is required.",
       errMessageMax: "Maximum 1000 characters.",
+    },
+    techStack: {
+      label: "Technology stack",
+      heading: ["Top-tier", "technologies."],
+      sub: "We build on the world's most advanced platforms to deliver reliable, secure and scalable solutions.",
     },
     footer: {
       tagline: "Intelligent technology within reach of every business.",
@@ -449,6 +459,11 @@ export const translations = {
       errMessageRequired: "Le message est obligatoire.",
       errMessageMax: "Maximum 1000 caractères.",
     },
+    techStack: {
+      label: "Stack technologique",
+      heading: ["Technologies", "de premier rang."],
+      sub: "Nous construisons sur les plateformes les plus avancées au monde pour garantir des solutions fiables, sécurisées et évolutives.",
+    },
     footer: {
       tagline: "Technologie intelligente à la portée de toutes les entreprises.",
       columns: [
@@ -601,6 +616,11 @@ export const translations = {
       errCompanyMax: "Màxim 200 caràcters.",
       errMessageRequired: "El missatge és obligatori.",
       errMessageMax: "Màxim 1000 caràcters.",
+    },
+    techStack: {
+      label: "Stack tecnològic",
+      heading: ["Tecnologies", "de primer nivell."],
+      sub: "Construïm sobre les plataformes més avançades del món per garantir solucions fiables, segures i escalables.",
     },
     footer: {
       tagline: "Tecnologia intel·ligent a l'abast de totes les empreses.",
