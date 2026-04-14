@@ -70,7 +70,7 @@ const solutions = [
     title: "Agenda inteligente con chatbot",
     desc: "Pensada para negocios donde la gestión de citas y la atención al cliente consumen horas de trabajo cada día.",
     features: ["Clínicas, dentistas y centros de salud", "Peluquerías y centros de estética", "Academias y centros formativos", "Talleres mecánicos y servicios técnicos"],
-    price: "Desde 124,90€",
+    price: "Precio a consultar",
     href: "#precios",
   },
   {
@@ -82,7 +82,7 @@ const solutions = [
     title: "Sistema IA de pedidos",
     desc: "Para negocios con alto volumen de pedidos o ventas donde los errores manuales y la falta de control generan pérdidas.",
     features: ["Restaurantes y bares con carta digital", "Distribuidoras y mayoristas", "E-commerce y tiendas online", "Empresas de logística y reparto"],
-    price: "Desde 149,90€",
+    price: "Precio a consultar",
     href: "#precios",
   },
 ];
