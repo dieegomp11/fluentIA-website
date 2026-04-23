@@ -268,8 +268,10 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right — AI chat */}
-          <AIChatMockup />
+          {/* Right — AI chat (hidden on mobile, shown md+) */}
+          <div className="hidden md:block">
+            <AIChatMockup />
+          </div>
         </div>
       </div>
     </section>
