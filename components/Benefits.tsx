@@ -24,8 +24,12 @@ export default function Benefits() {
   const b = t.benefits;
 
   return (
-    <section id="beneficios" className="py-20 md:py-24 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="beneficios" className="relative py-20 md:py-24 lg:py-32 bg-white overflow-hidden">
+      {/* Decorative background blobs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[#fce7f3] to-transparent opacity-40 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[#e0ecff] to-transparent opacity-30 blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="max-w-2xl mb-16">
           <motion.p
@@ -101,7 +105,7 @@ export default function Benefits() {
           <div className="absolute -bottom-10 left-10 w-60 h-60 bg-[#2563eb] opacity-10 blur-3xl rounded-full pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-8">
-            <div className="w-16 h-16 rounded-2xl bg-[#d4145a]/20 flex items-center justify-center shrink-0">
+            <div className="floating w-16 h-16 rounded-2xl bg-[#d4145a]/20 flex items-center justify-center shrink-0">
               <Users size={32} weight="duotone" className="text-[#d4145a]" />
             </div>
             <div className="flex-1">

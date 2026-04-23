@@ -63,7 +63,7 @@ function PricingCard({
       }
       className={`card-shine relative flex flex-col rounded-2xl border transition-all duration-300 overflow-hidden ${
         featured
-          ? "bg-[#0e1a3d] border-[#d4145a]/40 shadow-2xl shadow-[#d4145a]/20"
+          ? "featured-glow bg-[#0e1a3d] border-[#d4145a]/40"
           : "bg-white border-[#e8edf5]"
       }`}
     >
@@ -238,7 +238,7 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10 items-stretch">
           {planMeta.map((_, i) => (
             <PricingCard key={i} index={i} />
           ))}

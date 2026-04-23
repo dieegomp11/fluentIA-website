@@ -173,7 +173,7 @@ export default function Hero() {
     <section
       id="inicio"
       ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center pt-14 sm:pt-24 overflow-hidden bg-white"
+      className="relative min-h-[100dvh] flex items-center pt-20 sm:pt-24 overflow-hidden bg-white"
       onMouseMove={(e) => {
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -181,15 +181,22 @@ export default function Hero() {
         mouseY.set(((e.clientY - rect.top - rect.height / 2) / rect.height) * 20);
       }}
     >
+      {/* Dot grid background */}
+      <div className="absolute inset-0 dot-grid-light pointer-events-none" />
+
+      {/* Aurora wash */}
+      <div className="absolute inset-0 aurora-bg opacity-70 pointer-events-none" />
+
       {/* Background blobs */}
       <motion.div
         style={{ x: springX, y: springY }}
-        className="absolute top-10 right-0 w-[650px] h-[650px] rounded-full bg-gradient-to-br from-[#f0f7ff] to-[#e8f0fe] opacity-60 blur-3xl pointer-events-none"
+        className="absolute top-10 right-0 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[#e8f0fe] via-[#f0f7ff] to-[#fce7f3] opacity-70 blur-3xl pointer-events-none floating-slow"
       />
       <motion.div
         style={{ x: springX, y: springY }}
-        className="absolute -bottom-20 left-0 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#fdf2f8] to-[#fce7f3] opacity-50 blur-3xl pointer-events-none"
+        className="absolute -bottom-20 left-0 w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-[#fdf2f8] via-[#ffe4ee] to-[#e0ecff] opacity-55 blur-3xl pointer-events-none floating"
       />
+      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#d4145a] opacity-[0.03] blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-6 pb-16 md:pt-8 md:pb-20 lg:pt-12 lg:pb-28">
         <div className="grid md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
@@ -200,7 +207,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[2.8rem] sm:text-[4rem] md:text-[3.4rem] lg:text-[5rem] xl:text-[6.2rem] font-extrabold text-[#0f172a] leading-[1.04] tracking-tight mb-6"
+              className="text-fluid-hero font-extrabold text-[#0f172a] leading-[1.04] tracking-tight mb-6"
             >
               {h.headline[0]}{" "}
               <span className="text-gradient-fuchsia">{h.headline[1]}</span>{" "}
@@ -227,7 +234,7 @@ export default function Hero() {
                 href="#contacto"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 rounded-xl bg-[#d4145a] text-white font-semibold text-sm shadow-lg shadow-[#d4145a]/30 hover:bg-[#b01049] transition-colors"
+                className="btn-primary-glow inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 rounded-xl bg-[#d4145a] text-white font-semibold text-sm shadow-lg shadow-[#d4145a]/30"
               >
                 {h.cta1}
                 <ArrowRight size={16} weight="bold" />

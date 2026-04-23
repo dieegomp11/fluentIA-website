@@ -10,6 +10,7 @@ import LangSwitcher from "@/components/LangSwitcher";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { t } = useT();
   const n = t.nav;
 
@@ -23,7 +24,11 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 24);
+    const handler = () => {
+      setScrolled(window.scrollY > 24);
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -44,6 +49,15 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
+      {/* Scroll progress bar */}
+      <div
+        className="absolute bottom-0 left-0 h-[2px] pointer-events-none transition-[width] duration-100"
+        style={{
+          width: `${scrollProgress}%`,
+          background: "linear-gradient(90deg, var(--fuchsia) 0%, var(--blue-light) 60%, var(--fuchsia-light) 100%)",
+          opacity: scrollProgress > 1 ? 1 : 0,
+        }}
+      />
       {/* ─── Desktop nav (lg+): flex + absolutely-centred logo ─── */}
       <div className="hidden lg:flex relative items-center max-w-7xl mx-auto px-6 lg:px-8 h-24 xl:h-28 w-full">
 
