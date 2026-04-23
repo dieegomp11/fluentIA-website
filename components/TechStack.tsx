@@ -77,10 +77,10 @@ export default function TechStack() {
   const ts = t.techStack;
 
   return (
-    <section className="py-16 md:py-20 lg:py-28 bg-white">
+    <section className="py-12 md:py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div ref={ref} className="text-center mb-14">
+        <div ref={ref} className="text-center mb-8 md:mb-14">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -117,11 +117,11 @@ export default function TechStack() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6, scale: 1.04 }}
-              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-[#e8edf5] bg-white cursor-default transition-all duration-300 hover:shadow-lg"
+              className="group flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl border border-[#e8edf5] bg-white cursor-default transition-all duration-300 hover:shadow-lg"
               style={{ ["--tech-color" as string]: color }}
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                 style={{ background: bg }}
               >
                 {svg}

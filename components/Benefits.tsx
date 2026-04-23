@@ -24,14 +24,14 @@ export default function Benefits() {
   const b = t.benefits;
 
   return (
-    <section id="beneficios" className="relative py-20 md:py-24 lg:py-32 bg-white overflow-hidden">
+    <section id="beneficios" className="relative py-14 md:py-24 lg:py-32 bg-white overflow-hidden">
       {/* Decorative background blobs */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[#fce7f3] to-transparent opacity-40 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[#e0ecff] to-transparent opacity-30 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div ref={headerRef} className="max-w-2xl mb-16">
+        <div ref={headerRef} className="max-w-2xl mb-10 md:mb-16">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
@@ -44,7 +44,7 @@ export default function Benefits() {
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight"
+            className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight"
           >
             {b.heading[0]}{" "}
             <span className="text-[#94a3b8]">{b.heading[1]}</span>{" "}
@@ -99,7 +99,7 @@ export default function Benefits() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="noise-bg relative mt-16 bg-[#0e1a3d] rounded-3xl p-10 lg:p-14 overflow-hidden"
+          className="noise-bg relative mt-10 md:mt-16 bg-[#0e1a3d] rounded-3xl p-5 sm:p-8 lg:p-14 overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#d4145a] opacity-10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute -bottom-10 left-10 w-60 h-60 bg-[#2563eb] opacity-10 blur-3xl rounded-full pointer-events-none" />

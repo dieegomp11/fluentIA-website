@@ -614,16 +614,18 @@ body {
 ══════════════════════════════════════════ */
 
 /* Prevent horizontal overflow on small screens */
-@media (max-width: 640px) {
-  .overflow-x-safe {
-    overflow-x: hidden;
-  }
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
-/* Better tap targets on touch devices */
+/* Better tap targets — only on explicit tap-target class to avoid breaking toggles */
 @media (pointer: coarse) {
-  button, a {
+  .tap-target {
     min-height: 44px;
     min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }

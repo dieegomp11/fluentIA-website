@@ -206,7 +206,7 @@ export default function Pricing() {
   const p = t.pricing;
 
   return (
-    <section id="precios" className="pt-10 pb-20 md:pb-24 lg:pt-14 lg:pb-32 bg-white scroll-mt-20 md:scroll-mt-24 lg:scroll-mt-28">
+    <section id="precios" className="pt-8 pb-14 md:pb-24 lg:pt-14 lg:pb-32 bg-white scroll-mt-20 md:scroll-mt-24 lg:scroll-mt-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-10">

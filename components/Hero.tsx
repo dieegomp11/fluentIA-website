@@ -68,12 +68,12 @@ function AIChatMockup() {
     shownCount > 0 && shownCount < msgs.length && msgs[shownCount]?.type === "bot";
 
   return (
-    <div className="w-full max-w-[480px] ml-auto">
+    <div className="w-full max-w-[460px] mx-auto md:ml-auto md:mr-0">
       <motion.div
         initial={{ opacity: 0, y: 30, rotateY: -6 }}
         animate={{ opacity: 1, y: 0, rotateY: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-white rounded-2xl border border-[#e8edf5] shadow-2xl shadow-[#1a2b5f]/10 overflow-hidden flex flex-col min-h-[340px] md:min-h-[420px] lg:min-h-[520px]"
+        className="bg-white rounded-2xl border border-[#e8edf5] shadow-2xl shadow-[#1a2b5f]/10 overflow-hidden flex flex-col min-h-[300px] md:min-h-[400px] lg:min-h-[500px]"
       >
         {/* Header */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-[#f1f5f9] bg-[#f8f9fc]">
@@ -198,16 +198,16 @@ export default function Hero() {
       />
       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#d4145a] opacity-[0.03] blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-6 pb-16 md:pt-8 md:pb-20 lg:pt-12 lg:pb-28">
-        <div className="grid md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-4 pb-10 md:pt-8 md:pb-20 lg:pt-12 lg:pb-28">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center">
 
           {/* Left — text */}
-          <div className="max-w-xl">
+          <div className="w-full">
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="text-fluid-hero font-extrabold text-[#0f172a] leading-[1.04] tracking-tight mb-6"
+              className="text-fluid-hero font-extrabold text-[#0f172a] leading-[1.04] tracking-tight mb-4 md:mb-6"
             >
               {h.headline[0]}{" "}
               <span className="text-gradient-fuchsia">{h.headline[1]}</span>{" "}
@@ -218,7 +218,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-base md:text-[1rem] lg:text-[1.1rem] text-[#475569] leading-relaxed mb-8 md:mb-10"
+              className="text-sm sm:text-base lg:text-[1.1rem] text-[#475569] leading-relaxed mb-6 md:mb-10"
             >
               {h.sub}
             </motion.p>
@@ -228,7 +228,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.25 }}
-              className="flex flex-wrap items-center gap-4 mb-10 md:mb-12"
+              className="flex flex-wrap items-center gap-3 mb-6 md:mb-12"
             >
               <motion.a
                 href="#contacto"

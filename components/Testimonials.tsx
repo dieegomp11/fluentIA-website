@@ -16,11 +16,11 @@ export default function Testimonials() {
   const tm = t.testimonials;
 
   return (
-    <section id="nosotros" className="py-20 md:py-24 lg:py-32 bg-[#f8f9fc] overflow-hidden">
+    <section id="nosotros" className="py-14 md:py-24 lg:py-32 bg-[#f8f9fc] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Header */}
-        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-16">
+        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
@@ -33,7 +33,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
+            className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
           >
             {tm.heading[0]}{" "}
             <span className="text-gradient-fuchsia">{tm.heading[1]}</span>
@@ -60,7 +60,7 @@ export default function Testimonials() {
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#2563eb] opacity-10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#7c3aed] opacity-10 blur-3xl rounded-full pointer-events-none" />
 
-          <div className="relative z-10 px-10 py-14 lg:px-16 lg:py-20 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+          <div className="relative z-10 px-5 py-8 sm:px-10 sm:py-12 lg:px-16 lg:py-20 flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
             {/* Left: text */}
             <div className="flex-1 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4145a]/20 border border-[#d4145a]/30 mb-6">
@@ -77,8 +77,8 @@ export default function Testimonials() {
             </div>
 
             {/* Right: Spain map */}
-            <div className="lg:min-w-[320px] flex flex-col items-center gap-3">
-              <div className="relative w-full max-w-[320px] bg-white/5 border border-white/10 rounded-2xl p-4">
+            <div className="w-full max-w-[320px] lg:min-w-[300px] flex flex-col items-center gap-3 mx-auto lg:mx-0">
+              <div className="relative w-full bg-white/5 border border-white/10 rounded-2xl p-3 sm:p-4">
                 <svg viewBox="0 0 300 225" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <pattern id="dots" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
@@ -108,7 +108,7 @@ export default function Testimonials() {
                   <text x="184" y="132" fontSize="8.5" fill="white" fillOpacity="0.95" fontFamily="sans-serif" fontWeight="700" letterSpacing="0.3">Albacete</text>
                 </svg>
               </div>
-              <div className="flex gap-3 w-full max-w-[320px]">
+              <div className="flex gap-2 sm:gap-3 w-full">
                 {tm.stats.map(({ num, label }) => (
                   <div key={label} className="flex-1 bg-white/5 border border-white/10 rounded-xl py-3 text-center">
                     <p className="text-lg font-extrabold text-white">{num}</p>

@@ -31,10 +31,10 @@ export default function Solutions() {
   const s = t.solutions;
 
   return (
-    <section id="soluciones" className="relative py-20 md:py-24 lg:py-32 bg-[#f8f9fc] dot-grid-light overflow-hidden">
+    <section id="soluciones" className="relative py-14 md:py-24 lg:py-32 bg-[#f8f9fc] dot-grid-light overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div ref={headerRef} className="max-w-2xl mb-16">
+        <div ref={headerRef} className="max-w-2xl mb-10 md:mb-16">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
@@ -74,7 +74,7 @@ export default function Solutions() {
               >
                 {/* Gradient header block */}
                 <div
-                  className="relative px-7 pt-8 pb-10"
+                  className="relative px-5 pt-6 pb-8 sm:px-7 sm:pt-8 sm:pb-10"
                   style={{ background: `linear-gradient(135deg, ${gradFrom}, ${gradTo})` }}
                 >
                   <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full opacity-20" style={{ background: "white" }} />
@@ -88,7 +88,7 @@ export default function Solutions() {
                 </div>
 
                 {/* White body */}
-                <div className="flex flex-col flex-1 bg-white px-7 pt-6 pb-7">
+                <div className="flex flex-col flex-1 bg-white px-5 pt-5 pb-5 sm:px-7 sm:pt-6 sm:pb-7">
                   <p className="text-sm text-[#64748b] leading-relaxed mb-5">{item.desc}</p>
                   <ul className="flex flex-col gap-2.5 flex-1 mb-6">
                     {item.features.map((f) => (

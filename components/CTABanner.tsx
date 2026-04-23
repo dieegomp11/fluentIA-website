@@ -65,11 +65,11 @@ export default function CTABanner() {
   ];
 
   return (
-    <section id="contacto" className="pt-24 pb-20 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 bg-white">
+    <section id="contacto" className="pt-14 pb-14 sm:pt-20 sm:pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Header */}
-        <div ref={ref} className="max-w-2xl mb-14">
+        <div ref={ref} className="max-w-2xl mb-8 md:mb-14">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -82,7 +82,7 @@ export default function CTABanner() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
+            className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.15] tracking-tight mb-4"
           >
             {c.heading[0]}{" "}
             <span className="text-gradient-fuchsia">{c.heading[1]}</span>
@@ -138,7 +138,7 @@ export default function CTABanner() {
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-white rounded-3xl border border-[#e8edf5] shadow-xl shadow-[#1a2b5f]/5 p-8 lg:p-10"
+            className="bg-white rounded-3xl border border-[#e8edf5] shadow-xl shadow-[#1a2b5f]/5 p-5 sm:p-7 lg:p-10"
           >
             {sent ? (
               <motion.div
