@@ -124,24 +124,24 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ─── Mobile/tablet bar (below lg): centred logo + hamburger ─── */}
-      <div className="lg:hidden relative flex items-center justify-center max-w-7xl mx-auto px-6 h-20 sm:h-24">
-        <a href="#inicio" className="flex items-center">
+      {/* ─── Mobile/tablet bar (below lg): logo left + hamburger right ─── */}
+      <div className="lg:hidden flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 h-20 sm:h-24 w-full">
+        <a href="#inicio" className="flex items-center shrink-0">
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
             alt="fluentIA"
             width={180}
             height={54}
             priority
-            className="h-16 sm:h-20 w-auto"
+            className="h-12 sm:h-16 w-auto"
           />
         </a>
         <button
-          className="absolute right-6 p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
+          className="shrink-0 p-2.5 rounded-xl text-[#334155] hover:bg-[#f1f5f9] active:bg-[#e8edf5] transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {open ? <X size={22} /> : <List size={22} />}
+          {open ? <X size={24} /> : <List size={24} />}
         </button>
       </div>
 
@@ -156,18 +156,18 @@ export default function Navbar() {
             className="lg:hidden fixed inset-0 z-[60] bg-white flex flex-col"
           >
             {/* Menu header */}
-            <div className="flex items-center justify-between px-6 h-20 sm:h-24 border-b border-[#e8edf5] shrink-0">
-              <a href="#inicio" onClick={() => setOpen(false)} className="flex items-center">
+            <div className="flex items-center justify-between px-4 sm:px-6 h-20 sm:h-24 border-b border-[#e8edf5] shrink-0">
+              <a href="#inicio" onClick={() => setOpen(false)} className="flex items-center shrink-0">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
                   alt="fluentIA"
                   width={180}
                   height={54}
-                  className="h-16 sm:h-20 w-auto"
+                  className="h-12 sm:h-16 w-auto"
                 />
               </a>
               <button
-                className="p-2 rounded-lg text-[#334155] hover:bg-[#f8f9fc] transition-colors"
+                className="shrink-0 p-2.5 rounded-xl text-[#334155] hover:bg-[#f1f5f9] active:bg-[#e8edf5] transition-colors"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
               >

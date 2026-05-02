@@ -109,7 +109,7 @@ export default function TechStack() {
         </div>
 
         {/* Logo grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {techs.map(({ name, color, bg, svg }, i) => (
             <motion.div
               key={name}
@@ -117,22 +117,18 @@ export default function TechStack() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6, scale: 1.04 }}
-              className="group flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-6 rounded-2xl border border-[#e8edf5] bg-white cursor-default transition-all duration-300 hover:shadow-lg"
+              className="group flex flex-col items-center gap-2 p-3 sm:p-5 rounded-xl sm:rounded-2xl border border-[#e8edf5] bg-white cursor-default transition-all duration-300 hover:shadow-lg"
               style={{ ["--tech-color" as string]: color }}
             >
               <div
-                className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                 style={{ background: bg }}
               >
                 {svg}
               </div>
-              <span className="text-xs font-bold text-[#475569] tracking-wide group-hover:text-[#0f172a] transition-colors">
+              <span className="text-[11px] sm:text-xs font-bold text-[#475569] tracking-wide group-hover:text-[#0f172a] transition-colors text-center leading-tight">
                 {name}
               </span>
-              <div
-                className="h-0.5 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ background: color }}
-              />
             </motion.div>
           ))}
         </div>
